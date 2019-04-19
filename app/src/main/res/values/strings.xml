@@ -11,4 +11,7 @@
     <string name="VerificationTextWhy">A verification email will be sent to the email you provided. We use this verification email to keep our app safe from attacks and to make sure our users are genuine
     after verifying your email you will be able to login</string>
     <string name="VerificationButton">Click here to send verification email</string>
+    <string name="HomeItem">Home</string>
+    <string name="ProfileItem">Profile</string>
+    <string name="ListItem">List of shame</string>
 </resources>

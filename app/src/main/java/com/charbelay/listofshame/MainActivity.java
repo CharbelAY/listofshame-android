@@ -1,6 +1,7 @@
 package com.charbelay.listofshame;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -85,13 +86,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
+    public void gotToRegister() {
+        // Do something in response to button
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View view) {
         if(view==buttonLogin){
             LoginUser();
         }
         if(view==textViewLogIn){
-            //open signin activity
+            gotToRegister();
         }
     }
 }

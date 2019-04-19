@@ -3,5 +3,8 @@
     <string name="hintEmail">Please enter your Email</string>
     <string name="hintPassword">Please enter your Password</string>
     <string name="Register">Register</string>
+    <string name="login">Login</string>
     <string name="signInText">Already Registered? Sign in here </string>
+    <string name="registerText">Not Registered? Register here </string>
+    <string name="loginTextView">Login Page</string>
 </resources>

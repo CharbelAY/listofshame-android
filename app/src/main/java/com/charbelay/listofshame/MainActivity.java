@@ -16,13 +16,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button   buttonRegister;
+    private Button   buttonLogin;
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private TextView textViewSignIn;
+    private TextView textViewLogIn;
 
     private ProgressDialog progressDialog;
 
@@ -36,16 +37,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         firebaseAuth     = FirebaseAuth.getInstance();
 
         progressDialog   = new ProgressDialog(this);
-        buttonRegister   = findViewById(R.id.register);
+        buttonLogin      = findViewById(R.id.login);
         editTextEmail    = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
-        textViewSignIn   = findViewById(R.id.textViewSignIn);
+        textViewLogIn    = findViewById(R.id.textViewRegister);
 
-        buttonRegister.setOnClickListener(this);
-        textViewSignIn.setOnClickListener(this);
+        buttonLogin.setOnClickListener(this);
+        textViewLogIn.setOnClickListener(this);
     }
 
-    private void registerUser(){
+    private void LoginUser(){
         String email     = editTextEmail.getText().toString().trim();
         String password  = editTextPassword.getText().toString().trim();
 
@@ -61,18 +62,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        progressDialog.setMessage("Registering User... Please wait");
+        progressDialog.setMessage("Loging you in... Please wait");
         progressDialog.show();
 
-        firebaseAuth.createUserWithEmailAndPassword(email,password)
+        firebaseAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(MainActivity.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"Login successful",Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }else{
-                            Toast.makeText(MainActivity.this,"Failed to Register, please try again",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+//                            if(task.getException() instanceof FirebaseAuthUserCollisionException){
+//                                Toast.makeText(getApplicationContext(),"You are already registered please sign in",Toast.LENGTH_SHORT).show();
+//                            }else{
+//                                Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+//                            }
                             progressDialog.dismiss();
                         }
                     }
@@ -81,10 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if(view==buttonRegister){
-            registerUser();
+        if(view==buttonLogin){
+            LoginUser();
         }
-        if(view==textViewSignIn){
+        if(view==textViewLogIn){
             //open signin activity
         }
     }

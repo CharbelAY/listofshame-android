@@ -16,6 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="@string/loginTextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
         <EditText
             android:layout_margin="15dp"
             android:inputType="textEmailAddress"
@@ -34,15 +42,15 @@
 
         <Button
             android:layout_margin="15dp"
-            android:id="@+id/register"
-            android:text="@string/Register"
+            android:id="@+id/login"
+            android:text="@string/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:textAlignment="center"
-            android:text="@string/signInText"
-            android:id="@+id/textViewSignIn"
+            android:text="@string/registerText"
+            android:id="@+id/textViewRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

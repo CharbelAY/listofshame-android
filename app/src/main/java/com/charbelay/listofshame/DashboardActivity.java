@@ -47,8 +47,11 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (true) {
+            moveTaskToBack(true);
         } else {
             super.onBackPressed();
         }
     }
+
+
 }

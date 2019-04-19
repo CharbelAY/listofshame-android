@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,6 +38,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth     = FirebaseAuth.getInstance();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            goToDashboardActivity();
+        } else {
+        }
+
         progressDialog   = new ProgressDialog(this);
         buttonLogin      = findViewById(R.id.login);
         editTextEmail    = findViewById(R.id.editTextEmail);
@@ -45,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonLogin.setOnClickListener(this);
         textViewLogIn.setOnClickListener(this);
+
     }
 
     private void LoginUser(){

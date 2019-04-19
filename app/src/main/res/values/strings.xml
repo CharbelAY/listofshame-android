@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">listofshame</string>
+    <string name="hintEmail">Please enter your Email</string>
+    <string name="hintPassword">Please enter your Password</string>
+    <string name="Register">Register</string>
+    <string name="signInText">Already Registered? Sign in here </string>
+</resources>

@@ -7,4 +7,8 @@
     <string name="signInText">Already Registered? Sign in here </string>
     <string name="registerText">Not Registered? Register here </string>
     <string name="loginTextView">Login Page</string>
+    <string name="VerificationText">Verify your email</string>
+    <string name="VerificationTextWhy">A verification email will be sent to the email you provided. We use this verification email to keep our app safe from attacks and to make sure our users are genuine
+    after verifying your email you will be able to login</string>
+    <string name="VerificationButton">Click here to send verification email</string>
 </resources>

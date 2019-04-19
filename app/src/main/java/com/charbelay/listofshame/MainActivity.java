@@ -71,15 +71,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(MainActivity.this,"Login successful",Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
+                            if(firebaseAuth.getCurrentUser().isEmailVerified()){
+                                Toast.makeText(MainActivity.this,"Login successful",Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                                goToDashboardActivity();
+                            }else{
+                                Toast.makeText(MainActivity.this,"You need to verify your email first",Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                            }
                         }else{
                             Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-//                            if(task.getException() instanceof FirebaseAuthUserCollisionException){
-//                                Toast.makeText(getApplicationContext(),"You are already registered please sign in",Toast.LENGTH_SHORT).show();
-//                            }else{
-//                                Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-//                            }
                             progressDialog.dismiss();
                         }
                     }
@@ -89,6 +90,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void gotToRegister() {
         // Do something in response to button
         Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToDashboardActivity(){
+        Intent intent = new Intent(this, DashboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 

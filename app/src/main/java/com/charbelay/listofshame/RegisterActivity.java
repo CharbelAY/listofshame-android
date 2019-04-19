@@ -1,6 +1,7 @@
 package com.charbelay.listofshame;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
 
-        progressDialog.setMessage("Registering you... Please wait");
+        progressDialog.setMessage("Sending you a confirmation email... Please wait");
         progressDialog.show();
 
         firebaseAuth.createUserWithEmailAndPassword(email,password)
@@ -66,6 +67,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"Registration successful",Toast.LENGTH_SHORT).show();
+                            firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(getApplicationContext(),"Confirmation email has been sent, Please check your email",Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            });
+                            goToMainActivity();
                         }else{
                             if(task.getException() instanceof FirebaseAuthUserCollisionException){
                                 Toast.makeText(getApplicationContext(),"You are already registered please sign in",Toast.LENGTH_SHORT).show();
@@ -76,6 +89,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         progressDialog.dismiss();
                     }
                 });
+    }
+
+    public void goToMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override

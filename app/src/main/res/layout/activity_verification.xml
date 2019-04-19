@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context=".RegisterActivity">
+    tools:context=".VerificationActivity">
 
     <LinearLayout
         android:layout_centerVertical="true"
@@ -21,29 +21,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:gravity="center"
-            android:text="@string/registerText"
+            android:text="@string/VerificationText"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        <EditText
-            android:layout_margin="15dp"
-            android:inputType="textEmailAddress"
-            android:hint="@string/hintEmail"
-            android:id="@+id/RegisterActivityEditTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:layout_margin="15dp"
-            android:inputType="textPassword"
-            android:hint="@string/hintPassword"
-            android:id="@+id/RegisterActivityEditTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <Button
             android:layout_margin="15dp"
-            android:id="@+id/RegisterActivityRegister"
-            android:text="@string/Register"
+            android:id="@+id/VerificationActivityButton"
+            android:text="@string/VerificationButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

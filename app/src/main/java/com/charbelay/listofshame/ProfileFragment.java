@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
@@ -50,6 +51,8 @@ public class ProfileFragment extends Fragment {
 
     private StorageReference  storageReference;
     private DatabaseReference databaseReference;
+
+    private StorageTask areWeDoingAStorageTask;
 
 
     @Nullable
@@ -76,7 +79,11 @@ public class ProfileFragment extends Fragment {
         buttonUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadFile();
+                if(areWeDoingAStorageTask!=null && areWeDoingAStorageTask.isInProgress()){
+                    Toast.makeText(getContext(),"Your File is still uploading please wait",Toast.LENGTH_SHORT).show();
+                }else {
+                    uploadFile();
+                }
             }
         });
 
@@ -92,7 +99,7 @@ public class ProfileFragment extends Fragment {
     private void uploadFile(){
         if(ImageUri != null){
             StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(ImageUri));
-            fileReference.putFile(ImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            areWeDoingAStorageTask=fileReference.putFile(ImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Handler handler = new Handler();

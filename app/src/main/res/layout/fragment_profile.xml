@@ -2,14 +2,50 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:padding="16dp">
 
-    <TextView
+    <Button
+        android:id="@+id/chooseImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chooseImage"
+        />
+
+    <EditText
+        android:id="@+id/editTextImageComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/EnterComment"
+        android:layout_below="@+id/progressBar"
+        android:layout_marginTop="16dp"
+        android:inputType="textMultiLine"
+        />
+
+    <ImageView
+        android:id="@+id/ImageView"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/chooseImage"
+        android:layout_above="@+id/UploadImage"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/UploadImage"
+        />
+
+    <Button
+        android:id="@+id/UploadImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Profile"
-        android:textAlignment="center"
-        android:textSize="30sp" />
+        android:text="@string/UploadImage" />
+
+
 
 </RelativeLayout>

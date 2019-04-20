@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "107594569253-rvo7329302gpbqacbmsh4d1nqfloirh6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.charbelay.listofshame",
+            "certificate_hash": "a6f4fdf847a7e08d076c6f1d5bc4e5d95805bbdd"
+          }
+        },
+        {
           "client_id": "107594569253-lcc1tggfk9kmu8v6h9dspbmj8l9o3m7g.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,13 +22,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Charbel on 2019-04-23.
  */
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
-    private ArrayList<String> ImageNames = new ArrayList<>();
-    private ArrayList<String> Images = new ArrayList<>();
+//    private ArrayList<String> ImageNames = new ArrayList<>();
+//    private ArrayList<String> Images = new ArrayList<>();
+    private List<Upload> mUploads;
     private Context mContext;
 
-    public ListAdapter(ArrayList<String> imageNames, ArrayList<String> images, Context mContext) {
-        ImageNames = imageNames;
-        Images = images;
+    public ListAdapter(List<Upload> uploads, Context mContext) {
+//        ImageNames = imageNames;
+//        Images = images;
+        mUploads = uploads;
         this.mContext = mContext;
     }
 
@@ -41,12 +44,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        Upload uploadCurrent = mUploads.get(i);
         Glide.with(mContext)
                 .asBitmap()
-                .load(Images.get(i))
+                .load(uploadCurrent.getImageURL())
                 .into(viewHolder.image);
 
-        viewHolder.imageName.setText(ImageNames.get(i));
+        viewHolder.imageName.setText(uploadCurrent.getComment());
 
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +62,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return ImageNames.size();
+        return mUploads.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

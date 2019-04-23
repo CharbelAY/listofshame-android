@@ -2,9 +2,11 @@ package com.charbelay.listofshame;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,6 +33,8 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -40,14 +44,17 @@ public class ProfileFragment extends Fragment {
 
 
     public static final int PICK_IMAGE_REQUEST = 1;
+    public static final int TAKE_PICTURE       = 0;
 
     private Button buttonChooseImage;
+    private Button OpenCamera;
     private Button      buttonUploadImage;
     private ImageView imageView;
     private EditText editTextComment;
     private ProgressBar progressBar;
 
     private Uri ImageUri;
+    private Bundle extras;
 
     private StorageReference  storageReference;
     private DatabaseReference databaseReference;
@@ -60,6 +67,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile,container,false);
         buttonChooseImage = view.findViewById(R.id.chooseImage);
+        OpenCamera        = view.findViewById(R.id.TakePicture);
         buttonUploadImage = view.findViewById(R.id.UploadImage);
         imageView         = view.findViewById(R.id.ImageView);
         editTextComment   = view.findViewById(R.id.editTextImageComment);
@@ -73,6 +81,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 openFileChooser();
+            }
+        });
+
+        OpenCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,TAKE_PICTURE);
             }
         });
 
@@ -150,6 +166,19 @@ public class ProfileFragment extends Fragment {
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             ImageUri = data.getData();
             imageView.setImageURI(ImageUri);
+        }
+        if(requestCode == TAKE_PICTURE && resultCode==RESULT_OK){
+            extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imageBitmap);
+            Uri filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
+            }catch (Exception e){
+
+            }
+
         }
     }
 

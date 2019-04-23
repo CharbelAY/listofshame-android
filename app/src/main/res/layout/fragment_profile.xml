@@ -9,8 +9,8 @@
         android:id="@+id/chooseImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/chooseImage"
-        />
+        android:layout_marginLeft="65dp"
+        android:text="@string/chooseImage" />
 
     <EditText
         android:id="@+id/editTextImageComment"
@@ -45,6 +45,13 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/UploadImage" />
+
+    <Button
+        android:id="@+id/TakePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/chooseImage"
+        android:text="@string/OpenCamera" />
 
 
 

@@ -17,4 +17,6 @@
     <string name="UploadImage">Upload Image</string>
     <string name="chooseImage">Choose Image</string>
     <string name="EnterComment">Enter Comment</string>
+    <string name="OpenCamera">Open Camera</string>
+
 </resources>

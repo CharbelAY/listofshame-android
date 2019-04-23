@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +45,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        String s = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Upload uploadCurrent = mUploads.get(i);
         Glide.with(mContext)
                 .asBitmap()
-                .load(uploadCurrent.getImageURL())
+                .load("https://listofshame-6d272.firebaseio.com/"+"Uploads"+s+"/"+uploadCurrent.getImageURL())
                 .into(viewHolder.image);
 
         viewHolder.imageName.setText(uploadCurrent.getComment());

@@ -116,4 +116,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             gotToRegister();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (true) {
+            moveTaskToBack(true);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

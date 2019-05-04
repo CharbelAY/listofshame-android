@@ -10,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -41,6 +42,10 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.LOCATION_SERVICE;
@@ -86,7 +91,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         buttonChooseImage = view.findViewById(R.id.chooseImage);
-        OpenCamera = view.findViewById(R.id.TakePicture);
+//        OpenCamera = view.findViewById(R.id.TakePicture);
         buttonUploadImage = view.findViewById(R.id.UploadImage);
         imageView = view.findViewById(R.id.ImageView);
         editTextComment = view.findViewById(R.id.editTextImageComment);
@@ -137,13 +142,14 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        OpenCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,TAKE_PICTURE);
-            }
-        });
+//        OpenCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(intent,TAKE_PICTURE);
+//
+//            }
+//        });
 
         buttonUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,21 +235,43 @@ public class ProfileFragment extends Fragment {
             ImageUri = data.getData();
             imageView.setImageURI(ImageUri);
         }
-        if(requestCode == TAKE_PICTURE && resultCode==RESULT_OK){
-            extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);
-            Uri filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
-            }catch (Exception e){
-
-            }
+//        if(requestCode == TAKE_PICTURE && resultCode==RESULT_OK){
+//            StorageReference storageRef = FirebaseStorage.getInstance().getReference("Uploads");
+//            storageRef= storageRef.child(System.currentTimeMillis()+"."+"jpg");
+//
+//
+//            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//            imageView.setImageBitmap(bitmap);
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+//            byte[] data1 = baos.toByteArray();
+//            UploadTask uploadTask = storageRef.putBytes(data1);
+//            uploadTask.addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//
+//                }
+//            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Toast.makeText(getContext(),"Success",Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//            Upload upload =new Upload(editTextComment.getText().toString().trim(),System.currentTimeMillis()+"."+"jpg");
+//            String uploadId = databaseReference.push().getKey();
+//            databaseReference.child(uploadId).setValue(upload);
+//
+//            }
 
         }
+
+//    private String getPictureName(){
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+//        String timestamp = sdf.format(new Date());
+//        return "listofshame"+timestamp+".jpg";
+//    }
+
+
     }
 
-
-}
 

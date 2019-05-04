@@ -2,6 +2,7 @@ package com.charbelay.listofshame;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -51,7 +52,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Upload uploadCurrent = mUploads.get(i);
+        final Upload uploadCurrent = mUploads.get(i);
         viewHolder.imageName.setText(uploadCurrent.getComment());
         Glide.with(mContext)
                 .asBitmap()
@@ -64,6 +65,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext,"ok",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext,DetailPost.class);
+                intent.putExtra("upload",uploadCurrent);
+                mContext.startActivity(intent);
             }
         });
     }

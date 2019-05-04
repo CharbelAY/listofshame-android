@@ -1,9 +1,11 @@
 package com.charbelay.listofshame;
 
+import java.io.Serializable;
+
 /**
  * Created by Charbel on 2019-04-20.
  */
-public class Upload {
+public class Upload implements Serializable {
 
     private String comment;
     private String imageURL;

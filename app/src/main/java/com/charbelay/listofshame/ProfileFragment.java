@@ -1,14 +1,20 @@
 package com.charbelay.listofshame;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +43,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.LOCATION_SERVICE;
 
 /**
  * Created by Charbel on 2019-04-19.
@@ -44,38 +52,83 @@ public class ProfileFragment extends Fragment {
 
 
     public static final int PICK_IMAGE_REQUEST = 1;
-    public static final int TAKE_PICTURE       = 0;
+    public static final int TAKE_PICTURE = 0;
 
     private Button buttonChooseImage;
     private Button OpenCamera;
-    private Button      buttonUploadImage;
+    private Button buttonUploadImage;
     private ImageView imageView;
     private EditText editTextComment;
     private ProgressBar progressBar;
 
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+
     private Uri ImageUri;
     private Bundle extras;
 
-    private StorageReference  storageReference;
+    private StorageReference storageReference;
     private DatabaseReference databaseReference;
 
     private StorageTask areWeDoingAStorageTask;
 
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults.length>1 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile,container,false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
         buttonChooseImage = view.findViewById(R.id.chooseImage);
-        OpenCamera        = view.findViewById(R.id.TakePicture);
+        OpenCamera = view.findViewById(R.id.TakePicture);
         buttonUploadImage = view.findViewById(R.id.UploadImage);
-        imageView         = view.findViewById(R.id.ImageView);
-        editTextComment   = view.findViewById(R.id.editTextImageComment);
-        progressBar       = view.findViewById(R.id.progressBar);
+        imageView = view.findViewById(R.id.ImageView);
+        editTextComment = view.findViewById(R.id.editTextImageComment);
+        progressBar = view.findViewById(R.id.progressBar);
 
-        String s = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        storageReference  = FirebaseStorage.getInstance().getReference("Uploads"+s);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads"+s);
+        locationManager = (LocationManager) getContext().getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.INTERNET
+            },10);
+        }
+
+//
+//        public void configureButton(){
+//
+//            locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
+//        }
+
+        storageReference  = FirebaseStorage.getInstance().getReference("Uploads");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads");
 
         buttonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +159,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+
     private String getFileExtension(Uri uri){
         ContentResolver cr = getActivity().getContentResolver();
         MimeTypeMap mtm = MimeTypeMap.getSingleton();
@@ -126,12 +180,20 @@ public class ProfileFragment extends Fragment {
                         }
                     },500);
                     Toast.makeText(getContext(),"Successfully uploaded post",Toast.LENGTH_SHORT).show();
-
-                    Upload upload = new Upload(editTextComment.getText().toString().trim(),
-                            taskSnapshot.getStorage().getDownloadUrl().toString());
-
-                    String uploadId = databaseReference.push().getKey();
-                    databaseReference.child(uploadId).setValue(upload);
+                    if (taskSnapshot.getMetadata() != null) {
+                        if (taskSnapshot.getMetadata().getReference() != null) {
+                            Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
+                            result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String imageUrl = uri.toString();
+                                    Upload upload =new Upload(editTextComment.getText().toString().trim(),imageUrl);
+                                    String uploadId = databaseReference.push().getKey();
+                                    databaseReference.child(uploadId).setValue(upload);
+                                }
+                            });
+                        }
+                    }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

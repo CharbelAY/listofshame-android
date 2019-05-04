@@ -2,8 +2,10 @@ package com.charbelay.listofshame;
 
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 //    private ArrayList<String> Images = new ArrayList<>();
     private List<Upload> mUploads;
     private Context mContext;
+    private Uri uri1;
 
     public ListAdapter(List<Upload> uploads, Context mContext) {
 //        ImageNames = imageNames;
@@ -45,11 +51,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        String s = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Upload uploadCurrent = mUploads.get(i);
+        viewHolder.imageName.setText(uploadCurrent.getComment());
         Glide.with(mContext)
                 .asBitmap()
-                .load("https://listofshame-6d272.firebaseio.com/"+"Uploads"+s+"/"+uploadCurrent.getImageURL())
+                .load(uploadCurrent.getImageURL())
                 .into(viewHolder.image);
 
         viewHolder.imageName.setText(uploadCurrent.getComment());

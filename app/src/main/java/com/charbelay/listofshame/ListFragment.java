@@ -39,7 +39,7 @@ public class ListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         mUploads = new ArrayList<>();
         String s = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mDataBaseRef = FirebaseDatabase.getInstance().getReference("Uploads"+s);
+        mDataBaseRef = FirebaseDatabase.getInstance().getReference("Uploads");
         mDataBaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -7,4 +7,5 @@ import com.charbelay.listofshame.Presenter.ILoginPresenter;
  */
 public interface IUserModel {
     void LoginStatus();
+    void RegisterStatus();
 }

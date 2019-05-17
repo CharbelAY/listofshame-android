@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.charbelay.listofshame.DashboardActivity;
 import com.charbelay.listofshame.Presenter.ILoginPresenter;
 import com.charbelay.listofshame.Presenter.LoginPresenter;
 import com.charbelay.listofshame.R;
@@ -44,7 +45,6 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
         loginPresenter = new LoginPresenter(this);
 
 
-        progressDialog   = new ProgressDialog(this);
         buttonLogin      = findViewById(R.id.login);
         editTextEmail    = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
@@ -57,6 +57,8 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if(view==buttonLogin){
+            progressDialog.setMessage("Loging you in... Please wait");
+            progressDialog.show();
             LoginResult(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
         }
         if(view==textViewLogIn){
@@ -68,21 +70,21 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
 
     public void gotToRegister() {
         // Do something in response to button
-        Intent intent = new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this,RegisterView.class);
         startActivity(intent);
     }
 
     @Override
     public void LoginResult(String email , String password) {
-        progressDialog.setMessage("Loging you in... Please wait");
-        progressDialog.show();
         loginPresenter.getInformedLogin(email,password);
-        progressDialog.dismiss();
     }
 
     @Override
     public void onLoginMessageReceived(String message) {
+        progressDialog.dismiss();
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, DashboardActivity.class);
+        startActivity(intent);
 
     }
 

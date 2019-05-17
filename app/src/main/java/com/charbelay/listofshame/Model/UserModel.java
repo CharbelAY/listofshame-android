@@ -8,11 +8,13 @@ import android.widget.Toast;
 
 import com.charbelay.listofshame.MainActivity;
 import com.charbelay.listofshame.Presenter.ILoginPresenter;
+import com.charbelay.listofshame.Presenter.IRegisterPresenter;
 import com.charbelay.listofshame.View.LoginView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 import java.util.concurrent.Executor;
 
@@ -23,10 +25,18 @@ public class UserModel extends AppCompatActivity implements IUserModel {
     String ResultMessage;
     private FirebaseAuth firebaseAuth;
     ILoginPresenter loginPresenter;
+    IRegisterPresenter registerPresenter;
     String email,password;
 
     public UserModel(ILoginPresenter loginPresenter, String email , String password){
         this.loginPresenter=loginPresenter;
+        this.email=email;
+        this.password=password;
+        firebaseAuth = FirebaseAuth.getInstance();
+    }
+
+    public UserModel(IRegisterPresenter registerPresenter, String email , String password){
+        this.registerPresenter=registerPresenter;
         this.email=email;
         this.password=password;
         firebaseAuth = FirebaseAuth.getInstance();
@@ -67,5 +77,40 @@ public class UserModel extends AppCompatActivity implements IUserModel {
                     });
         }
 
+    }
+
+    @Override
+    public void RegisterStatus() {
+        firebaseAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        ResultMessage = "Confirmation email has been sent, Please check your email";
+                                        registerPresenter.onRegisterResult(ResultMessage);
+                                    }else{
+                                        ResultMessage=task.getException().getMessage();
+                                        registerPresenter.onRegisterResult(ResultMessage);
+
+                                    }
+                                }
+                            });
+                        }else{
+                            if(task.getException() instanceof FirebaseAuthUserCollisionException){
+                                ResultMessage = "You are already registered please sign in";
+                                registerPresenter.onRegisterResult(ResultMessage);
+
+                            }else{
+                                ResultMessage = task.getException().getMessage();
+                                registerPresenter.onRegisterResult(ResultMessage);
+
+                            }
+                        }
+                    }
+                });
     }
 }

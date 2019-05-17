@@ -3,18 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
+    android:background="@color/grey"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
     android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
     tools:context=".MainActivity">
-    
+
     <LinearLayout
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -25,33 +26,35 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <EditText
-            android:layout_margin="15dp"
-            android:inputType="textEmailAddress"
-            android:hint="@string/hintEmail"
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:hint="@string/hintEmail"
+            android:inputType="textEmailAddress" />
 
         <EditText
-            android:layout_margin="15dp"
-            android:inputType="textPassword"
-            android:hint="@string/hintPassword"
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+
+            android:hint="@string/hintPassword"
+            android:inputType="textPassword" />
 
         <Button
-            android:layout_margin="15dp"
             android:id="@+id/login"
-            android:text="@string/login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/login" />
 
         <TextView
-            android:textAlignment="center"
-            android:text="@string/registerText"
             android:id="@+id/textViewRegister"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/registerText"
+            android:textAlignment="center" />
     </LinearLayout>
 </RelativeLayout>

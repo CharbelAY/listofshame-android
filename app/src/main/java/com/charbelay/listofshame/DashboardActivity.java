@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.charbelay.listofshame.View.ListFragmentView;
+
 import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -47,7 +49,7 @@ public class DashboardActivity extends AppCompatActivity {
                             selectedFragment = new ProfileFragment();
                             break;
                         case R.id.nav_list:
-                            selectedFragment = new ListFragment();
+                            selectedFragment = new ListFragmentView();
                             break;
                     }
 

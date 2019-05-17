@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.charbelay.listofshame.ListAdapter;
+import com.charbelay.listofshame.Presenter.IListFragmentPresenter;
 import com.charbelay.listofshame.Presenter.ListFragmentPresenter;
 import com.charbelay.listofshame.R;
 import com.charbelay.listofshame.Upload;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * Created by Charbel on 2019-05-17.
  */
-public class ListFragmentView extends Fragment {
+public class ListFragmentView extends Fragment implements IListFragmentView {
 
     private List<Upload> mUploads;
     private RecyclerView recyclerView;

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Charbel on 2019-05-17.
  */
-public class ListFragmentPresenter {
+public class ListFragmentPresenter implements IListFragmentPresenter {
     ListFragmentView listFragmentView;
     private List<Upload> mUploads;
 

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Charbel on 2019-05-17.
  */
-public class DataProviderFirebase {
+public class DataProviderFirebase implements IDataProviderFirebase {
 
     private DatabaseReference mDataBaseRef;
 

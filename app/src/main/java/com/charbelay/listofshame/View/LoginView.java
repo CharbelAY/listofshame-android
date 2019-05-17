@@ -83,8 +83,10 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
     public void onLoginMessageReceived(String message) {
         progressDialog.dismiss();
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, DashboardActivity.class);
-        startActivity(intent);
+        if(message.equals("Login successful")){
+            Intent intent = new Intent(this, DashboardActivity.class);
+            startActivity(intent);
+        }
 
     }
 

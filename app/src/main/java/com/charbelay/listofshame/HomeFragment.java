@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.charbelay.listofshame.View.LoginView;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -37,7 +38,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(view.getContext(),MainActivity.class);
+                Intent intent = new Intent(view.getContext(), LoginView.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }

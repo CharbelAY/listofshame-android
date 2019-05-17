@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.charbelay.listofshame.MainActivity;
 import com.charbelay.listofshame.Presenter.ILoginPresenter;
 import com.charbelay.listofshame.Presenter.IRegisterPresenter;
+import com.charbelay.listofshame.Presenter.LoginPresenter;
+import com.charbelay.listofshame.Presenter.RegisterPresenter;
 import com.charbelay.listofshame.View.LoginView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,18 +26,18 @@ import java.util.concurrent.Executor;
 public class UserModel extends AppCompatActivity implements IUserModel {
     String ResultMessage;
     private FirebaseAuth firebaseAuth;
-    ILoginPresenter loginPresenter;
-    IRegisterPresenter registerPresenter;
+    LoginPresenter loginPresenter;
+    RegisterPresenter registerPresenter;
     String email,password;
 
-    public UserModel(ILoginPresenter loginPresenter, String email , String password){
+    public UserModel(LoginPresenter loginPresenter, String email , String password){
         this.loginPresenter=loginPresenter;
         this.email=email;
         this.password=password;
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public UserModel(IRegisterPresenter registerPresenter, String email , String password){
+    public UserModel(RegisterPresenter registerPresenter, String email , String password){
         this.registerPresenter=registerPresenter;
         this.email=email;
         this.password=password;

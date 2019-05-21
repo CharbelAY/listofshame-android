@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.charbelay.listofshame.View.ListFragmentView;
+import com.charbelay.listofshame.View.MapFragmentView;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -15,7 +16,7 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FirstMapFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MapFragmentView()).commit();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
@@ -31,7 +32,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                     switch (menuItem.getItemId()){
                         case R.id.nav_home:
-                            selectedFragment = new FirstMapFragment();
+                            selectedFragment = new MapFragmentView();
                             break;
                         case R.id.nav_profile:
                             selectedFragment = new ProfileFragment();

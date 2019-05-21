@@ -18,6 +18,8 @@ import com.charbelay.listofshame.Presenter.ILoginPresenter;
 import com.charbelay.listofshame.Presenter.LoginPresenter;
 import com.charbelay.listofshame.R;
 import com.charbelay.listofshame.RegisterActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by Charbel on 2019-05-15.
@@ -25,6 +27,7 @@ import com.charbelay.listofshame.RegisterActivity;
 public class LoginView extends AppCompatActivity implements View.OnClickListener,ILoginView {
 
     BroadcastReceiver receiver;
+    private FirebaseAuth firebaseAuth;
 
     private Button buttonLogin;
     private EditText editTextEmail;
@@ -39,6 +42,14 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        firebaseAuth     = FirebaseAuth.getInstance();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            goToDashboardActivity();
+        } else {
+        }
 
         progressDialog   = new ProgressDialog(this);
 
@@ -66,6 +77,11 @@ public class LoginView extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    public void goToDashboardActivity(){
+        Intent intent = new Intent(this, DashboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 
 
     public void gotToRegister() {

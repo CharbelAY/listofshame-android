@@ -1,25 +1,13 @@
 package com.charbelay.listofshame;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.charbelay.listofshame.View.ListFragmentView;
-
-import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -27,7 +15,7 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FirstFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FirstMapFragment()).commit();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
@@ -43,7 +31,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                     switch (menuItem.getItemId()){
                         case R.id.nav_home:
-                            selectedFragment = new FirstFragment();
+                            selectedFragment = new FirstMapFragment();
                             break;
                         case R.id.nav_profile:
                             selectedFragment = new ProfileFragment();

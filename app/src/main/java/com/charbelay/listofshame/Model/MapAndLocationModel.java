@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
 import com.charbelay.listofshame.Presenter.MapPresenter;
+import com.charbelay.listofshame.ProfileFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -30,11 +31,16 @@ import static android.content.Context.LOCATION_SERVICE;
 public class MapAndLocationModel {
     MapPresenter mapPresenter;
     LocationManager locationManager;
+    ProfileFragment pf;
 
 
     public MapAndLocationModel(MapPresenter mapPresenter){
         this.mapPresenter=mapPresenter;
     }
+
+    public MapAndLocationModel(ProfileFragment pf){ this.pf=pf;}
+
+
 
     public void getInitialFlag(final Context ViewContext){
 
@@ -58,8 +64,13 @@ public class MapAndLocationModel {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     LatLng latLng = new LatLng(latitude, longitude);
+                    if(pf!=null){
+                        pf.takeLocation(latitude,longitude);
+                    }
                     Geocoder geocoder = new Geocoder(ViewContext);
-                    mapPresenter.resultFlag(latLng);
+                    if(mapPresenter!=null){
+                        mapPresenter.resultFlag(latLng);
+                    }
 //                    try {
 //                        List<Address> adressesList = geocoder.getFromLocation(latitude,longitude,1);
 //                        String str =adressesList.get(0).getCountryName()+" ";
@@ -122,4 +133,5 @@ public class MapAndLocationModel {
 
 
     }
+
     }

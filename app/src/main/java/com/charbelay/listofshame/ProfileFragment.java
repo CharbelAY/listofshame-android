@@ -27,7 +27,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.charbelay.listofshame.Model.MapAndLocationModel;
 import com.charbelay.listofshame.View.LoginView;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -70,10 +72,11 @@ public class ProfileFragment extends Fragment {
 
     private LocationManager locationManager;
     private LocationListener locationListener;
+    double latitude;
+    double longitude;
 
     private Uri ImageUri;
     private Bundle extras;
-
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
 
@@ -93,6 +96,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         buttonChooseImage = view.findViewById(R.id.chooseImage);
+        LatLng latlng;
         buttonLogout = view.findViewById(R.id.LogoutButton);
 //        OpenCamera = view.findViewById(R.id.TakePicture);
         buttonUploadImage = view.findViewById(R.id.UploadImage);
@@ -188,6 +192,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void uploadFile(){
+        MapAndLocationModel malm = new MapAndLocationModel(this);
+        malm.getInitialFlag(this.getContext());
         if(ImageUri != null){
             StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(ImageUri));
             areWeDoingAStorageTask=fileReference.putFile(ImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -208,7 +214,7 @@ public class ProfileFragment extends Fragment {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String imageUrl = uri.toString();
-                                    Upload upload =new Upload(editTextComment.getText().toString().trim(),imageUrl);
+                                    Upload upload =new Upload(editTextComment.getText().toString().trim(),latitude,longitude,imageUrl);
                                     String uploadId = databaseReference.push().getKey();
                                     databaseReference.child(uploadId).setValue(upload);
                                 }
@@ -239,6 +245,11 @@ public class ProfileFragment extends Fragment {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,PICK_IMAGE_REQUEST);
+    }
+
+    public void takeLocation(double latitude,double longitude){
+        this.latitude=latitude;
+        this.longitude=longitude;
     }
 
 

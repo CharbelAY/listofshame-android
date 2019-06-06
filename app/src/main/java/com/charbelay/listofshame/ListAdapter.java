@@ -75,7 +75,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext,"ok",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext,DetailPost.class);
                 intent.putExtra("upload",uploadCurrent);
                 mContext.startActivity(intent);

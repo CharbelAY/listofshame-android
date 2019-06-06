@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.charbelay.listofshame.ListAdapter;
 import com.charbelay.listofshame.Presenter.ListFragmentPresenter;
 import com.charbelay.listofshame.Upload;
+import com.charbelay.listofshame.View.MapFragmentView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +24,8 @@ public class DataProviderFirebase implements IDataProviderFirebase {
     private DatabaseReference mDataBaseRef;
 
     ListFragmentPresenter listFragmentPresenter;
+
+    MapFragmentView mapFragmentView;
 
     private List<Upload> mUploads;
 
@@ -44,6 +47,10 @@ public class DataProviderFirebase implements IDataProviderFirebase {
         this.listFragmentPresenter=listFragmentPresenter;
     }
 
+    public void pleaseTakeMyReferenceIAmMap(MapFragmentView mapFragmentView){
+        this.mapFragmentView=mapFragmentView;
+    }
+
     public void getMeThatData(){
         mUploads = new ArrayList<>();
         mDataBaseRef = FirebaseDatabase.getInstance().getReference("Uploads");
@@ -55,7 +62,13 @@ public class DataProviderFirebase implements IDataProviderFirebase {
                     mUploads.add(upload);
                 }
 
-                listFragmentPresenter.pleaseGetYourData(mUploads);
+                if(listFragmentPresenter!=null){
+                    listFragmentPresenter.pleaseGetYourData(mUploads);
+
+                }
+                if(mapFragmentView!=null){
+                    mapFragmentView.pleaseGetYourData(mUploads);
+                }
             }
 
             @Override

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="#32464541"
     android:padding="16dp">
 
     <Button
@@ -12,53 +12,66 @@
         android:layout_below="@+id/progressBar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:text="@string/chooseImage" />
+        android:background="@color/colorPrimary2"
+        android:text="@string/chooseImage"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <EditText
         android:id="@+id/editTextImageComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/EnterComment"
         android:layout_alignParentBottom="true"
-        android:padding="25dp"
         android:layout_marginTop="16dp"
+        android:hint="@string/EnterComment"
         android:inputType="textMultiLine"
-        />
+        android:padding="25dp" />
 
     <ImageView
         android:id="@+id/ImageView"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/UploadImage"
         android:layout_below="@+id/chooseImage"
-        android:layout_above="@+id/UploadImage"/>
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#52575655" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        />
+        android:layout_alignParentTop="true" />
 
     <Button
         android:id="@+id/UploadImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/editTextImageComment"
+        android:layout_alignParentLeft="true"
+        android:background="@color/colorPrimary2"
+        android:text="@string/UploadImage"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <Button
+        android:id="@+id/LogoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTextImageComment"
+        android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
-        android:text="@string/UploadImage" />
+        android:background="@color/colorPrimary2"
+        android:text="Logout"
+        android:textColor="@color/colorPrimaryDark" />
 
     <!--<Button-->
-        <!--android:id="@+id/TakePicture"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_below="@+id/progressBar"-->
-        <!--android:text="@string/OpenCamera" />-->
-
+    <!--android:id="@+id/TakePicture"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:layout_below="@+id/progressBar"-->
+    <!--android:text="@string/OpenCamera" />-->
 
 
 </RelativeLayout>

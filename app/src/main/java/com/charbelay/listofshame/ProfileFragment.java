@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.charbelay.listofshame.View.LoginView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -60,6 +61,7 @@ public class ProfileFragment extends Fragment {
     public static final int TAKE_PICTURE = 0;
 
     private Button buttonChooseImage;
+    private Button buttonLogout;
     private Button OpenCamera;
     private Button buttonUploadImage;
     private ImageView imageView;
@@ -91,6 +93,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         buttonChooseImage = view.findViewById(R.id.chooseImage);
+        buttonLogout = view.findViewById(R.id.LogoutButton);
 //        OpenCamera = view.findViewById(R.id.TakePicture);
         buttonUploadImage = view.findViewById(R.id.UploadImage);
         imageView = view.findViewById(R.id.ImageView);
@@ -151,6 +154,17 @@ public class ProfileFragment extends Fragment {
 //            }
 //        });
 
+
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(view.getContext(), LoginView.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
         buttonUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,6 +178,7 @@ public class ProfileFragment extends Fragment {
 
         return view;
     }
+
 
 
     private String getFileExtension(Uri uri){

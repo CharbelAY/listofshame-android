@@ -41,11 +41,12 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:layout_margin="15dp"
             android:id="@+id/RegisterActivityRegister"
-            android:text="@string/Register"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@android:drawable/btn_default_small"
+            android:text="@string/Register" />
 
         <TextView
             android:layout_width="match_parent"

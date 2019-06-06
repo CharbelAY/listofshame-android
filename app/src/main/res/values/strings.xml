@@ -14,7 +14,7 @@
     <string name="HomeItem">Home</string>
     <string name="ProfileItem">Profile</string>
     <string name="ListItem">List of shame</string>
-    <string name="UploadImage">Upload Image</string>
+    <string name="UploadImage">Upload</string>
     <string name="chooseImage">Choose Image</string>
     <string name="EnterComment">Enter Comment</string>
     <string name="OpenCamera">Open Camera</string>

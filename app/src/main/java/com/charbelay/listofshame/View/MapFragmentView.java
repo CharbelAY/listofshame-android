@@ -87,6 +87,9 @@ public class MapFragmentView extends Fragment implements OnMapReadyCallback, Goo
         MapsInitializer.initialize(context);
         mGoogleMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) this);
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        LatLng Bey = new LatLng(33.8938,35.5018);
+        CameraPosition Beirut = CameraPosition.builder().target(Bey).zoom(11).bearing(0).tilt(45).build();
+        mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Beirut));
         for(Upload up : mUploads){
             double lat = up.getLatitude();
             double lon = up.getLongitude();
